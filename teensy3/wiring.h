@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include "binary.h"
 #include "core_id.h"
-#include "core_pins.h"
+#include "core_pins.hpp"
 
 #ifdef __cplusplus
 extern "C"{

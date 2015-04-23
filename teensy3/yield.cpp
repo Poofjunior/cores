@@ -28,7 +28,7 @@
  * SOFTWARE.
  */
 
-#include "core_pins.h"
+#include "core_pins.hpp"
 #include "HardwareSerial.h"
 #include "usb_serial.h"
 #include "usb_seremu.h"

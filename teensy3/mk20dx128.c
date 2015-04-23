@@ -29,7 +29,7 @@
  */
 
 #include "kinetis.h"
-#include "core_pins.h" // testing only
+#include "core_pins.hpp" // testing only
 #include "ser_print.h" // testing only
 
 extern unsigned long _stext;

@@ -32,7 +32,7 @@
 
 #include "usb_dev.h"
 #include "usb_seremu.h"
-#include "core_pins.h" // for yield()
+#include "core_pins.hpp" // for yield()
 //#include "HardwareSerial.h"
 
 #ifdef SEREMU_INTERFACE // defined by usb_dev.h -> usb_desc.h

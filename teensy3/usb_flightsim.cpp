@@ -30,7 +30,7 @@
 
 #include "usb_dev.h"
 #include "usb_flightsim.h"
-#include "core_pins.h" // for yield(), millis()
+#include "core_pins.hpp" // for yield(), millis()
 #include <string.h>    // for memcpy()
 
 #ifdef FLIGHTSIM_INTERFACE // defined by usb_dev.h -> usb_desc.h

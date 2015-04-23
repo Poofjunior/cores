@@ -994,6 +994,180 @@ void attachInterruptVector(IRQ_NUMBER_t irq, void (*function)(void));
 void attachInterruptVector(enum IRQ_NUMBER_t irq, void (*function)(void));
 #endif
 void attachInterrupt(uint8_t pin, void (*function)(void), int mode);
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+typedef void (*voidFuncPtr)(void);
+volatile static voidFuncPtr intFunc[CORE_NUM_DIGITAL];
+/*
+#if defined(KINETISK)
+void porta_interrupt(void);
+void portb_interrupt(void);
+void portc_interrupt(void);
+void portd_interrupt(void);
+void porte_interrupt(void);
+#elif defined(KINETISL)
+void porta_interrupt(void);
+void portcd_interrupt(void);
+#endif
+*/
+#if defined(__MK20DX128__) || defined(__MK20DX256__)
+
+inline static void porta_interrupt(void)
+{
+    uint32_t isfr = PORTA_ISFR;
+    PORTA_ISFR = isfr;
+    if ((isfr & CORE_PIN3_BITMASK) && intFunc[3]) intFunc[3]();
+    if ((isfr & CORE_PIN4_BITMASK) && intFunc[4]) intFunc[4]();
+    if ((isfr & CORE_PIN24_BITMASK) && intFunc[24]) intFunc[24]();
+    if ((isfr & CORE_PIN33_BITMASK) && intFunc[33]) intFunc[33]();
+}
+
+inline static void portb_interrupt(void)
+{
+    uint32_t isfr = PORTB_ISFR;
+    PORTB_ISFR = isfr;
+    if ((isfr & CORE_PIN0_BITMASK) && intFunc[0]) intFunc[0]();
+    if ((isfr & CORE_PIN1_BITMASK) && intFunc[1]) intFunc[1]();
+    if ((isfr & CORE_PIN16_BITMASK) && intFunc[16]) intFunc[16]();
+    if ((isfr & CORE_PIN17_BITMASK) && intFunc[17]) intFunc[17]();
+    if ((isfr & CORE_PIN18_BITMASK) && intFunc[18]) intFunc[18]();
+    if ((isfr & CORE_PIN19_BITMASK) && intFunc[19]) intFunc[19]();
+    if ((isfr & CORE_PIN25_BITMASK) && intFunc[25]) intFunc[25]();
+    if ((isfr & CORE_PIN32_BITMASK) && intFunc[32]) intFunc[32]();
+}
+
+inline static void portc_interrupt(void)
+{
+    // TODO: these are inefficent.  Use CLZ somehow....
+    uint32_t isfr = PORTC_ISFR;
+    PORTC_ISFR = isfr;
+    if ((isfr & CORE_PIN9_BITMASK) && intFunc[9]) intFunc[9]();
+    if ((isfr & CORE_PIN10_BITMASK) && intFunc[10]) intFunc[10]();
+    if ((isfr & CORE_PIN11_BITMASK) && intFunc[11]) intFunc[11]();
+    if ((isfr & CORE_PIN12_BITMASK) && intFunc[12]) intFunc[12]();
+    if ((isfr & CORE_PIN13_BITMASK) && intFunc[13]) intFunc[13]();
+    if ((isfr & CORE_PIN15_BITMASK) && intFunc[15]) intFunc[15]();
+    if ((isfr & CORE_PIN22_BITMASK) && intFunc[22]) intFunc[22]();
+    if ((isfr & CORE_PIN23_BITMASK) && intFunc[23]) intFunc[23]();
+    if ((isfr & CORE_PIN27_BITMASK) && intFunc[27]) intFunc[27]();
+    if ((isfr & CORE_PIN28_BITMASK) && intFunc[28]) intFunc[28]();
+    if ((isfr & CORE_PIN29_BITMASK) && intFunc[29]) intFunc[29]();
+    if ((isfr & CORE_PIN30_BITMASK) && intFunc[30]) intFunc[30]();
+}
+
+inline static void portd_interrupt(void)
+{
+    uint32_t isfr = PORTD_ISFR;
+    PORTD_ISFR = isfr;
+    if ((isfr & CORE_PIN2_BITMASK) && intFunc[2]) intFunc[2]();
+    if ((isfr & CORE_PIN5_BITMASK) && intFunc[5]) intFunc[5]();
+    if ((isfr & CORE_PIN6_BITMASK) && intFunc[6]) intFunc[6]();
+    if ((isfr & CORE_PIN7_BITMASK) && intFunc[7]) intFunc[7]();
+    if ((isfr & CORE_PIN8_BITMASK) && intFunc[8]) intFunc[8]();
+    if ((isfr & CORE_PIN14_BITMASK) && intFunc[14]) intFunc[14]();
+    if ((isfr & CORE_PIN20_BITMASK) && intFunc[20]) intFunc[20]();
+    if ((isfr & CORE_PIN21_BITMASK) && intFunc[21]) intFunc[21]();
+}
+
+inline static void porte_interrupt(void)
+{
+    uint32_t isfr = PORTE_ISFR;
+    PORTE_ISFR = isfr;
+    if ((isfr & CORE_PIN26_BITMASK) && intFunc[26]) intFunc[26]();
+    if ((isfr & CORE_PIN31_BITMASK) && intFunc[31]) intFunc[31]();
+}
+
+#elif defined(__MKL26Z64__)
+
+inline static void porta_interrupt(void)
+{
+    uint32_t isfr = PORTA_ISFR;
+    PORTA_ISFR = isfr;
+    if ((isfr & CORE_PIN3_BITMASK) && intFunc[3]) intFunc[3]();
+    if ((isfr & CORE_PIN4_BITMASK) && intFunc[4]) intFunc[4]();
+}
+
+inline static void portcd_interrupt(void)
+{
+    uint32_t isfr = PORTC_ISFR;
+    PORTC_ISFR = isfr;
+    if ((isfr & CORE_PIN9_BITMASK) && intFunc[9]) intFunc[9]();
+    if ((isfr & CORE_PIN10_BITMASK) && intFunc[10]) intFunc[10]();
+    if ((isfr & CORE_PIN11_BITMASK) && intFunc[11]) intFunc[11]();
+    if ((isfr & CORE_PIN12_BITMASK) && intFunc[12]) intFunc[12]();
+    if ((isfr & CORE_PIN13_BITMASK) && intFunc[13]) intFunc[13]();
+    if ((isfr & CORE_PIN15_BITMASK) && intFunc[15]) intFunc[15]();
+    if ((isfr & CORE_PIN22_BITMASK) && intFunc[22]) intFunc[22]();
+    if ((isfr & CORE_PIN23_BITMASK) && intFunc[23]) intFunc[23]();
+    isfr = PORTD_ISFR;
+    PORTD_ISFR = isfr;
+    if ((isfr & CORE_PIN2_BITMASK) && intFunc[2]) intFunc[2]();
+    if ((isfr & CORE_PIN5_BITMASK) && intFunc[5]) intFunc[5]();
+    if ((isfr & CORE_PIN6_BITMASK) && intFunc[6]) intFunc[6]();
+    if ((isfr & CORE_PIN7_BITMASK) && intFunc[7]) intFunc[7]();
+    if ((isfr & CORE_PIN8_BITMASK) && intFunc[8]) intFunc[8]();
+    if ((isfr & CORE_PIN14_BITMASK) && intFunc[14]) intFunc[14]();
+    if ((isfr & CORE_PIN20_BITMASK) && intFunc[20]) intFunc[20]();
+    if ((isfr & CORE_PIN21_BITMASK) && intFunc[21]) intFunc[21]();
+}
+
+#endif
+
+#ifdef __cplusplus
+template <typename U> void attachMemberInterrupt(uint8_t pin,
+                                                 void (U::*function)(void),
+                                                 int mode)
+{
+    volatile uint32_t *config;
+    uint32_t cfg, mask;
+
+    if (pin >= CORE_NUM_DIGITAL) return;
+    switch (mode) {
+      case CHANGE:  mask = 0x0B; break;
+      case RISING:  mask = 0x09; break;
+      case FALLING: mask = 0x0A; break;
+      case LOW: mask = 0x08; break;
+      case HIGH:    mask = 0x0C; break;
+      default: return;
+    }
+    mask = (mask << 16) | 0x01000000;
+    config = portConfigRegister(pin);
+
+#if defined(KINETISK)
+    attachInterruptVector(IRQ_PORTA, porta_interrupt);
+    attachInterruptVector(IRQ_PORTB, portb_interrupt);
+    attachInterruptVector(IRQ_PORTC, portc_interrupt);
+    attachInterruptVector(IRQ_PORTD, portd_interrupt);
+    attachInterruptVector(IRQ_PORTE, porte_interrupt);
+#elif defined(KINETISL)
+    attachInterruptVector(IRQ_PORTA, porta_interrupt);
+    attachInterruptVector(IRQ_PORTCD, portcd_interrupt);
+#endif
+    __disable_irq();
+    cfg = *config;
+    cfg &= ~0x000F0000;     // disable any previous interrupt
+    *config = cfg;
+    //intFunc[pin] = (volatile voidFuncPtr)function;    // set the function pointer
+    intFunc[pin] = (void (* volatile)())function;    // set the function pointer
+    cfg |= mask;
+    *config = cfg;          // enable the new interrupt
+    __enable_irq();
+}
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+
+
 void detachInterrupt(uint8_t pin);
 void _init_Teensyduino_internal_(void);
 

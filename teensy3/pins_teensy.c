@@ -28,9 +28,10 @@
  * SOFTWARE.
  */
 
-#include "core_pins.h"
+#include "core_pins.hpp"
 #include "pins_arduino.h"
 #include "HardwareSerial.h"
+#include "usb_dev.h"
 
 
 #if defined(KINETISK)
@@ -109,6 +110,7 @@ const struct digital_pin_bitband_and_config_table_struct digital_pin_to_info_PGM
 #endif
 
 
+/*
 typedef void (*voidFuncPtr)(void);
 volatile static voidFuncPtr intFunc[CORE_NUM_DIGITAL];
 #if defined(KINETISK)
@@ -121,6 +123,7 @@ static void porte_interrupt(void);
 static void porta_interrupt(void);
 static void portcd_interrupt(void);
 #endif
+*/
 
 void attachInterruptVector(enum IRQ_NUMBER_t irq, void (*function)(void))
 {
@@ -164,6 +167,8 @@ void attachInterrupt(uint8_t pin, void (*function)(void), int mode)
 	__enable_irq();
 }
 
+
+
 void detachInterrupt(uint8_t pin)
 {
 	volatile uint32_t *config;
@@ -175,9 +180,10 @@ void detachInterrupt(uint8_t pin)
 	__enable_irq();
 }
 
+/*
 #if defined(__MK20DX128__) || defined(__MK20DX256__)
 
-static void porta_interrupt(void)
+void porta_interrupt(void)
 {
 	uint32_t isfr = PORTA_ISFR;
 	PORTA_ISFR = isfr;
@@ -187,7 +193,7 @@ static void porta_interrupt(void)
 	if ((isfr & CORE_PIN33_BITMASK) && intFunc[33]) intFunc[33]();
 }
 
-static void portb_interrupt(void)
+void portb_interrupt(void)
 {
 	uint32_t isfr = PORTB_ISFR;
 	PORTB_ISFR = isfr;
@@ -201,7 +207,7 @@ static void portb_interrupt(void)
 	if ((isfr & CORE_PIN32_BITMASK) && intFunc[32]) intFunc[32]();
 }
 
-static void portc_interrupt(void)
+void portc_interrupt(void)
 {
 	// TODO: these are inefficent.  Use CLZ somehow....
 	uint32_t isfr = PORTC_ISFR;
@@ -220,7 +226,7 @@ static void portc_interrupt(void)
 	if ((isfr & CORE_PIN30_BITMASK) && intFunc[30]) intFunc[30]();
 }
 
-static void portd_interrupt(void)
+void portd_interrupt(void)
 {
 	uint32_t isfr = PORTD_ISFR;
 	PORTD_ISFR = isfr;
@@ -234,7 +240,7 @@ static void portd_interrupt(void)
 	if ((isfr & CORE_PIN21_BITMASK) && intFunc[21]) intFunc[21]();
 }
 
-static void porte_interrupt(void)
+void porte_interrupt(void)
 {
 	uint32_t isfr = PORTE_ISFR;
 	PORTE_ISFR = isfr;
@@ -244,7 +250,7 @@ static void porte_interrupt(void)
 
 #elif defined(__MKL26Z64__)
 
-static void porta_interrupt(void)
+void porta_interrupt(void)
 {
 	uint32_t isfr = PORTA_ISFR;
 	PORTA_ISFR = isfr;
@@ -252,7 +258,7 @@ static void porta_interrupt(void)
 	if ((isfr & CORE_PIN4_BITMASK) && intFunc[4]) intFunc[4]();
 }
 
-static void portcd_interrupt(void)
+void portcd_interrupt(void)
 {
 	uint32_t isfr = PORTC_ISFR;
 	PORTC_ISFR = isfr;
@@ -277,6 +283,7 @@ static void portcd_interrupt(void)
 }
 
 #endif
+*/
 
 
 #if defined(__MK20DX128__) || defined(__MK20DX256__)

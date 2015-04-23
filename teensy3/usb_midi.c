@@ -30,7 +30,7 @@
 
 #include "usb_dev.h"
 #include "usb_midi.h"
-#include "core_pins.h" // for yield()
+#include "core_pins.hpp" // for yield()
 #include "HardwareSerial.h"
 
 #ifdef MIDI_INTERFACE // defined by usb_dev.h -> usb_desc.h

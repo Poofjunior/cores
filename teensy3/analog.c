@@ -28,7 +28,7 @@
  * SOFTWARE.
  */
 
-#include "core_pins.h"
+#include "core_pins.hpp"
 //#include "HardwareSerial.h"
 
 static uint8_t calibrating;

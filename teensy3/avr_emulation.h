@@ -32,7 +32,7 @@
 #define _avr_emulation_h_
 
 #include "kinetis.h"
-#include "core_pins.h"
+#include "core_pins.hpp"
 #include "pins_arduino.h"
 
 #ifdef __cplusplus

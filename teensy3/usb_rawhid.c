@@ -30,7 +30,7 @@
 
 #include "usb_dev.h"
 #include "usb_rawhid.h"
-#include "core_pins.h" // for yield(), millis()
+#include "core_pins.hpp" // for yield(), millis()
 #include <string.h>    // for memcpy()
 //#include "HardwareSerial.h"
 
